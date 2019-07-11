@@ -21,17 +21,6 @@ for sheet in sheets:
         list.append(str(a1)+str(a2))
     print(list)
 
-# for i in list:
-    # url = 'http://www.yes24.co.kr/'
-    # data = {'제목' : '뻘짓은 나만 하는줄 알았어', '저자' : '피터 홀린스'}
-    # response = requests.post(url, data=data)
-    # print(response)
-    #
-    # html = response.text
-    # soup = bs(html, 'html.parser')
-    # results = soup.select('td[class=goods_infogrp]')
-    # print(results)
-
 
 
 url = 'http://www.yes24.co.kr/'
@@ -45,18 +34,10 @@ aa = '%C3%D6%B0%AD%C0%C7%C0%CE%BB%FD'
 aa = urllib.parse.unquote_plus(aa)
 print(aa)
 
-# %C3%D6%B0%AD%C0%C7%C0%CE%BB%FD
+bb = '최강의 강의'
+bb = urllib.parse.quote_plus(bb)
+print(bb)
 
-# url = 'http://www.yes24.com/searchcorner/Search?keywordAd=&keyword=&domain=ALL&qdomain=%C0%FC%C3%BC&query=%BB%B9%C1%FE%C0%BA%B3%AA%B8%B8%C7%CF%B4%C2%C1%D9%BE%CB%BE%D2%BE%EE'
-# response = requests.get(url)
-# html = response.text
-# soup = bs(html, 'html.parser')
-# res = soup.select('td[class=goods_infogrp] > p[class=goods_price] > strong')
-# print(res)
-#
-# for i in res:
-#     print(i.text)
-
-    # td class='goods_infogrp' > p class='goods_price' > strong - 가격 /
-    # 만약 text가 절판이라면 '절판'text를 디비에 저장
-    # 절판이 아니라면 null 값으로 저장
+# yes24에 '최강의 강의'를 검색했을 때 url에 나타나는 암호를
+# aa와 같이 디코딩했을 때 결과 - �ְ����λ�
+# '최강의 강의'를 인코딩했을 때 결과 - %EC%B5%9C%EA%B0%95%EC%9D%98+%EA%B0%95%EC%9D%98
