@@ -94,11 +94,8 @@ class MyWindow(QWidget):
                                host='127.0.0.1',
                                database='bookstore')
         cursor = conn.cursor()
-        print(cursor)
-
         # 기존에 for문을 이용하면 데이터가 들어올 때마다 mysql에 접속하게 만드는 문제점이 있기 때문에 수정
         cursor.executemany("INSERT INTO bookinfo (title, author, publisher, price, stock) VALUES (%s, %s, %s, %s, %s)", list)
-        print('12345')
         conn.commit()
         cursor.close()
         conn.close()
