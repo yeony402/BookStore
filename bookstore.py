@@ -6,13 +6,14 @@ from bs4 import BeautifulSoup as bs
 import pymysql
 import pandas as pd
 
+
+
 # 엑셀파일 읽어오기
 wb = xlrd.open_workbook('C:/Users/yeony/Desktop/test_excel.xlsx')
 # 모든 시트 가져오기
 sheets = wb.sheets()
-# 모든 시트 디비로 저장
-## 첫번째 시트만 가져오기
-# sheet = wb.sheet_by_index(0)
+# 첫번째 시트만 가져오기
+sheet = wb.sheet_by_index(0)
 book_list = []
 
 for sheet in sheets:
@@ -23,13 +24,6 @@ for sheet in sheets:
 # print(book_list)
 
 
-##########################################################
-# query = sys.argv[1]
-conn = pymysql.connect(user='root',
-                              password='root',
-                              host='127.0.0.1',
-                              database='bookstore')
-cursor = conn.cursor()
 list = []
 for query in book_list:
     # 알리딘 api로 가져올 데이터
@@ -68,16 +62,18 @@ for query in book_list:
             sub_list.append(pricesales)
         for stockstatus in soup('stockstatus')[0]:
             sub_list.append(stockstatus)
-    list.append(sub_list)
+        if len(sub_list) == 4:
+            sub_list.append(' ')
+    list.append(tuple(sub_list))
 print(list)
 
-for sub_list in list:
-    if len(sub_list) == 4:
-        sub_list.append(' ')
-    add_data = tuple(sub_list)
-    print(add_data)
-    add_info = ("INSERT INTO bookinfo (title, author, publisher, price, stock) VALUES (%s, %s, %s, %s, %s)")
-    cursor.execute(add_info, add_data)
-    conn.commit()
+conn = pymysql.connect(user='root',
+                              password='root',
+                              host='127.0.0.1',
+                              database='bookstore')
+cursor = conn.cursor()
+# for문 삭제
+cursor.executemany("INSERT INTO bookinfo (title, author, publisher, price, stock) VALUES (%s, %s, %s, %s, %s)", list)
+conn.commit()
 cursor.close()
 conn.close()
